@@ -1,0 +1,12 @@
+[
+{
+"modid": "ForbiddenLands",
+"name": "Forbidden Lands",
+"description": "A mod that adds evil biomes and makes the game more challenging.", 
+"version": "2.0",
+"credits": "Made By: MrComputerGhost",
+"mcversion": "1.6.4",
+"authors": ["MrComputerGhost"],
+"dependencies": ["Minecraft Forge"]
+}
+]
