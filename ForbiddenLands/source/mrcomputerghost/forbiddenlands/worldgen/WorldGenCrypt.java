@@ -126,11 +126,6 @@ public class WorldGenCrypt extends WorldGenerator
 		world.setBlock(i + 3, j + 2, k + 2, Block.stoneSingleSlab.blockID);
 		world.setBlock(i + 3, j + 2, k + 3, Block.silverfish.blockID, 2, 2);
 		world.setBlock(i + 3, j + 3, k + 3, ForbiddenBlocks.TombStone.blockID, 2, 2);
-		TileEntityTombStone ts = (TileEntityTombStone)world.getBlockTileEntity(i + 3, j + 3, k + 3);
-        if (ts != null)
-        {
-           ts.name == "Steve";
-        }
 		world.setBlock(i + 3, j + 2, k + 4, Block.stoneSingleSlab.blockID);
 		world.setBlock(i + 3, j + 5, k + 2, Block.stairsCobblestone.blockID, 2, 2);
 		world.setBlock(i + 3, j + 5, k + 3, Block.silverfish.blockID, 1, 1);
