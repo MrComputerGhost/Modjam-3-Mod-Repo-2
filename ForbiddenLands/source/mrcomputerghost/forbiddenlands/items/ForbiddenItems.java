@@ -87,9 +87,9 @@ public class ForbiddenItems {
 		ParadoxPick = new ItemParadoxPick(ParadoxPickDefaultID, EnumToolParadox).setUnlocalizedName("Paradox Pick").setTextureName("forbiddenlands:paradoxpick").setCreativeTab(ForbiddenLands.ForbiddenTab);
 		GameRegistry.registerItem(ParadoxPick, "Paradox Pick");
 		LanguageRegistry.addName(ParadoxPick, "Paradox Pick");
-		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ParadoxDust), 3, 5, 25));
-		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ParadoxShard), 1, 4, 20));
-		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ParadoxShard), 1, 2, 10));
+		//ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ParadoxDust), 3, 5, 25));
+		//ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ParadoxShard), 1, 4, 20));
+		//ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ParadoxShard), 1, 2, 10));
 		ParadoxBow = new ItemParadoxBow(ParadoxBowDefaultID).setUnlocalizedName("Paradox Bow").setTextureName("forbiddenlands:bonebow").setCreativeTab(ForbiddenLands.ForbiddenTab);
 		GameRegistry.registerItem(ParadoxBow, "Paradox Bow");
 		LanguageRegistry.addName(ParadoxBow, "Paradox Rocket");

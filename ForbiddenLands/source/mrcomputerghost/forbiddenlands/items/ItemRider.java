@@ -46,14 +46,16 @@ public class ItemRider extends Item {
 	
 	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer player, World world, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
-		switch (par1ItemStack.getItemDamage())
+		if (!world.isRemote) {
+			switch (par1ItemStack.getItemDamage())
+		
         {
         case 0:
         	par1ItemStack.itemID = ForbiddenItems.Stacker.itemID;
         	par1ItemStack.setItemName("\u00A7rRider - Stack Mode");
         	player.addChatMessage("Rider Mode Set To Stack");
         	break;
-        }
+        }}
 		return true;
     }
 	

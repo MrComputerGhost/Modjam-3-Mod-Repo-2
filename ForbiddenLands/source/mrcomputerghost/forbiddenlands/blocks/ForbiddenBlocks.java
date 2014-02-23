@@ -22,7 +22,7 @@ public class ForbiddenBlocks {
 	public static Block DeathWood;
 	public static Block DeathLeaves;
 	public static Block DeathPlanks;
-	public static Block DeadGrass;
+	public static Block ParadoxBlock;
 	public static Block ThornShrub;
 	public static Block Thorns;
 	public static Block CorruptedBark;
@@ -36,7 +36,7 @@ public class ForbiddenBlocks {
 	public static int DeathWoodDefaultID;
 	public static int DeathLeavesDefaultID;
 	public static int DeathPlanksDefaultID;
-	public static int DeadGrassDefaultID;
+	public static int ParadoxBlockDefaultID;
 	public static int ThornShrubDefaultID;
 	public static int ThornsDefaultID;
 	public static int CorruptedBarkDefaultID;
@@ -53,11 +53,11 @@ public class ForbiddenBlocks {
 		DeathWood = new BlockDeathWood(4042, "DeathWood").setUnlocalizedName("DeathWood").setHardness(1.0F).setStepSound(Block.soundWoodFootstep).setResistance(0.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
 		DeathLeaves = new BlockDeathLeaves(4043, "DeathLeaves").setUnlocalizedName("DeathLeaves").setHardness(0.0F).setStepSound(Block.soundPowderFootstep).setResistance(0.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
 		DeathPlanks = new BlockDeathPlanks(4044, "DeathPlanks").setUnlocalizedName("DeathPlanks").setHardness(1.0F).setStepSound(Block.soundWoodFootstep).setResistance(0.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
-		DeadGrass = new BlockDeadGrass(4045, "DeadGrass").setUnlocalizedName("DeadGrass").setHardness(1.0F).setStepSound(Block.soundGrassFootstep).setResistance(0.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
+		ParadoxBlock = new BlockParadoxBlock(4045, "ParadoxBlock").setUnlocalizedName("ParadoxBlock").setHardness(1.0F).setStepSound(Block.soundGrassFootstep).setResistance(0.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
 		ThornShrub = new BlockThornShrub(4046, "ThornShrub").setUnlocalizedName("ThornShrub").setHardness(1.5F).setStepSound(Block.soundLadderFootstep).setResistance(1.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
 		Thorns = new BlockThorns(4047, "Thorns").setUnlocalizedName("Thorns").setHardness(0.5F).setStepSound(Block.soundLadderFootstep).setResistance(1.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
 		CorruptedBark = new BlockCorruptedBark(4048, "CorruptedBark").setUnlocalizedName("CorruptedBark").setHardness(0.7F).setStepSound(Block.soundLadderFootstep).setResistance(0.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
-		//FBPortal = new BlockFBPortal(4049).setUnlocalizedName("FBPortal").setBlockUnbreakable().setStepSound(Block.soundGlassFootstep).setResistance(10.0F).setCreativeTab(CreativeTabs.tabAllSearch);
+		FBPortal = new BlockFBPortal(4049).setUnlocalizedName("FBPortal").setBlockUnbreakable().setStepSound(Block.soundGlassFootstep).setResistance(10.0F).setCreativeTab(CreativeTabs.tabAllSearch);
 		ParadoxFire = new BlockParadoxFire(4050).setUnlocalizedName("ParadoxFire").setBlockUnbreakable().setStepSound(Block.soundAnvilFootstep).setResistance(0.0F).setCreativeTab(CreativeTabs.tabAllSearch);
 		EnchBark = new BlockEnchantedBark(4051, "EnchBark").setUnlocalizedName("EnchBark").setHardness(1.0F).setStepSound(Block.soundPowderFootstep).setResistance(1.0F).setCreativeTab(ForbiddenLands.ForbiddenTab);
 		EnchPlanks = new BlockEnchPlanks(4052, "EnchPlanks").setUnlocalizedName("EnchPlanks").setHardness(1.0F).setStepSound(Block.soundAnvilFootstep).setResistance(1.0F).setCreativeTab(CreativeTabs.tabDecorations);
@@ -67,10 +67,11 @@ public class ForbiddenBlocks {
 		GameRegistry.registerBlock(DeathWood, "DeathWood");
 		GameRegistry.registerBlock(DeathLeaves, "DeathLeaves");
 		GameRegistry.registerBlock(DeathPlanks, "DeathPlanks");
-		GameRegistry.registerBlock(DeadGrass, "DeadGrass");
+		GameRegistry.registerBlock(ParadoxBlock, "ParadoxBlock");
 		GameRegistry.registerBlock(ThornShrub, "ThornShrub");
 		GameRegistry.registerBlock(Thorns, "Thorns");
 		GameRegistry.registerBlock(CorruptedBark, "CorruptedBark");
+		//GameRegistry.registerBlock(FBPortal, "FBPortal");
 		GameRegistry.registerBlock(ParadoxFire, "ParadoxFire");
 		GameRegistry.registerBlock(EnchBark, "EnchBark");
 		GameRegistry.registerBlock(EnchPlanks, "EnchPlanks");
@@ -78,10 +79,11 @@ public class ForbiddenBlocks {
 		GameRegistry.registerBlock(TombStone, "TombStone");
 		GameRegistry.registerTileEntity(TileEntityTombStone.class, "TileEntityTombStone");
 		
+		
 		LanguageRegistry.addName(DeathWood, "Death Log");
 		LanguageRegistry.addName(DeathLeaves, "Death Leaves");
 		LanguageRegistry.addName(DeathPlanks, "Death Planks");
-		LanguageRegistry.addName(DeadGrass, "Dead Grass");
+		LanguageRegistry.addName(ParadoxBlock, "Dead Grass");
 		LanguageRegistry.addName(ThornShrub, "Thorn Shrub");
 		LanguageRegistry.addName(Thorns, "Deadly Sharp Thorns");
 		LanguageRegistry.addName(CorruptedBark, "Corrupted Barks");
@@ -90,6 +92,7 @@ public class ForbiddenBlocks {
 		LanguageRegistry.addName(EnchPlanks, "Enchanted Planks");
 		LanguageRegistry.addName(EnchLeaves, "Enchanted Leaves");
 		LanguageRegistry.addName(TombStone, "Tomb Stone");
+		//LanguageRegistry.addName(FBPortal, "Forbidden Portal");
 		
 		MinecraftForge.addGrassPlant(ThornShrub, 0, 25);
 		MinecraftForge.addGrassSeed(new ItemStack(Item.pumpkinSeeds), 25);
@@ -97,7 +100,7 @@ public class ForbiddenBlocks {
 		MinecraftForge.addGrassSeed(new ItemStack(ThornShrub), 5);
 		ChestGenHooks.getInfo(ChestGenHooks.BONUS_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ForbiddenBlocks.DeathPlanks), 1, 5, 25));
 		ChestGenHooks.getInfo(ChestGenHooks.BONUS_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(ForbiddenBlocks.DeathPlanks), 1, 5, 25));
-				
+		
 		
 	}
 

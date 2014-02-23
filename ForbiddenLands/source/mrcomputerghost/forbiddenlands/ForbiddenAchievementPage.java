@@ -8,12 +8,13 @@ import net.minecraftforge.common.AchievementPage;
 public class ForbiddenAchievementPage extends AchievementPage {
 
 	public static Achievement ridePlayer = new Achievement(4200, "ridePlayer", -2, 1, ForbiddenItems.Rider, (Achievement)null);
-
+	
+	
 	public ForbiddenAchievementPage() {
 		super("Forbidden Lands", new Achievement[] { ridePlayer });
 
 		LanguageRegistry.instance().addStringLocalization("achievement.ridePlayer", "en_US", "Player Rider");
-		LanguageRegistry.instance().addStringLocalization("achievement.ridePlayer.desc", "en_US", "Build a portal to the Twilight Forest");
+		
 
 	}
 

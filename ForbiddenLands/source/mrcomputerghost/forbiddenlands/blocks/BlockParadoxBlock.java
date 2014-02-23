@@ -11,12 +11,12 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockDeadGrass extends Block
+public class BlockParadoxBlock extends Block
 {
 
-	public BlockDeadGrass(int par1, String texture) 
+	public BlockParadoxBlock(int par1, String texture) 
     {
-            super(par1, Material.grass);
+            super(par1, Material.glass);
             setCreativeTab(CreativeTabs.tabBlock);
     }
 
@@ -32,7 +32,7 @@ public class BlockDeadGrass extends Block
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
-            this.blockIcon = par1IconRegister.registerIcon("forbiddenlands:dead_grass");
+            this.blockIcon = par1IconRegister.registerIcon("forbiddenlands:paradox_block");
     }
 	
 	/**

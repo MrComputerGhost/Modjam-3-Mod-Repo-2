@@ -4,8 +4,11 @@ import java.util.Random;
 
 import mrcomputerghost.forbiddenlands.blocks.ForbiddenBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.ChestGenHooks;
 
 public class WorldGenGrave extends WorldGenerator {
 	
@@ -62,7 +65,7 @@ public class WorldGenGrave extends WorldGenerator {
 				|| !LocationIsValidSpawn(world, i, j, k + 2)) {
 			return false;
 		}
-		
+		System.out.println("Graves at " + i + ", " + k);
 		world.setBlock(i + 0, j - 1, k + 0, Block.slowSand.blockID);
 		world.setBlock(i + 0, j - 1, k + 1, Block.slowSand.blockID);
 		world.setBlock(i + 0, j - 1, k + 2, Block.slowSand.blockID);
@@ -71,6 +74,13 @@ public class WorldGenGrave extends WorldGenerator {
 		world.setBlock(i + 2, j - 1, k + 1, Block.slowSand.blockID);
 		world.setBlock(i + 2, j - 1, k + 2, Block.slowSand.blockID);
 		world.setBlock(i + 2, j + 0, k + 2, this.customGraveID);
+		world.setBlock(i + 3, j - 3, k + 1, Block.chest.blockID);
+		TileEntityChest tileentitychest = (TileEntityChest)world.getBlockTileEntity(i + 2, j - 2, k + 2);
+        if (tileentitychest != null)
+        {
+            ChestGenHooks info = ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST);
+            WeightedRandomChestContent.generateChestContents(rand, info.getItems(rand), tileentitychest, info.getCount(rand));
+        }
 		world.setBlock(i - 4, j - 1, k + 0, Block.slowSand.blockID);
 		world.setBlock(i - 4, j - 1, k + 1, Block.slowSand.blockID);
 		world.setBlock(i - 4, j - 1, k + 2, Block.slowSand.blockID);

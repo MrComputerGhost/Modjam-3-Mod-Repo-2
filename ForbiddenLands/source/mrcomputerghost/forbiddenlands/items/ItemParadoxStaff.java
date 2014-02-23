@@ -75,7 +75,7 @@ public class ItemParadoxStaff extends ItemTool {
 				
 		
 		
-		//if ((player.inventory.hasItem(ForbiddenItems.ParadoxDust.itemID)) || (player.capabilities.isCreativeMode)) {
+		if ((player.inventory.hasItem(ForbiddenItems.ParadoxDust.itemID)) || (player.capabilities.isCreativeMode)) {
 		
         if(!world.isRemote)
             world.addWeatherEffect(new EntityLightningBolt(world, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord));
@@ -85,8 +85,8 @@ public class ItemParadoxStaff extends ItemTool {
         //world.spawnParticle("portal", par2 + par6Random.nextFloat(), par3 + 1.1F, par4 + par6Random.nextFloat(), mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
         //int sel = RANDOM.nextInt(8);
         //if (sel == 1) {
-        //	player.inventory.consumeInventoryItem(ForbiddenItems.ParadoxDust.itemID);
-        //}
+        	player.inventory.consumeInventoryItem(ForbiddenItems.ParadoxDust.itemID);
+        }
 		return item;
       }
 		

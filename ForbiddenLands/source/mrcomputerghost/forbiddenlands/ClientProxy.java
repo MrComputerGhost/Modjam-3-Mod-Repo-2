@@ -10,6 +10,7 @@ public class ClientProxy extends CommonProxy {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTombStone.class,
 				new TileEntityTombStoneRenderer());
+		
 	}
 
 }

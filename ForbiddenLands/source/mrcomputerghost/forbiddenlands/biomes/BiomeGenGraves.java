@@ -2,6 +2,8 @@ package mrcomputerghost.forbiddenlands.biomes;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
 import mrcomputerghost.forbiddenlands.worldgen.WorldGenCrypt;
 import mrcomputerghost.forbiddenlands.worldgen.WorldGenEnchTree;
 import mrcomputerghost.forbiddenlands.worldgen.WorldGenEvilWell;
@@ -27,13 +29,20 @@ public class BiomeGenGraves extends BiomeGenBase
         this.spawnableWaterCreatureList.clear();
         this.spawnableCaveCreatureList.clear();
         this.topBlock = (byte)Block.mycelium.blockID;
-        this.fillerBlock = (byte)Block.cobblestone.blockID;
+        if (Loader.isModLoaded("Mythic")) {
+        	Block quartisBlock = GameRegistry.findBlock("Mythic", "quartisBlock");
+        	this.fillerBlock = (byte)quartisBlock.blockID;
+        
+        } else {
+        	this.fillerBlock = (byte)Block.cobblestone.blockID;
+        }
         this.theBiomeDecorator.treesPerChunk = -999;
         this.theBiomeDecorator.deadBushPerChunk = 2;
         this.theBiomeDecorator.reedsPerChunk = 50;
         this.theBiomeDecorator.cactiPerChunk = 10;
         this.theBiomeDecorator.flowersPerChunk = -999;
         this.theBiomeDecorator.grassPerChunk = -999;
+        this.waterColorMultiplier = 15745542;
         this.spawnableMonsterList.add(new SpawnListEntry(EntityZombie.class, 15, 15, 15));
         this.spawnableMonsterList.add(new SpawnListEntry(EntitySkeleton.class, 1, 1, 5));
         this.spawnableCreatureList.add(new SpawnListEntry(EntityBat.class, 15, 15, 15));

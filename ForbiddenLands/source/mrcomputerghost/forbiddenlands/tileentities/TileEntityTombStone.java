@@ -1,7 +1,10 @@
 package mrcomputerghost.forbiddenlands.tileentities;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
@@ -14,18 +17,32 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class TileEntityTombStone extends TileEntity
 {
 	public String name;
-
+	
     public boolean isDirty = false; 
 	
     public TileEntityTombStone()
     {
         this.name = "Player";
+        
     }
 	
+    
+    public void setName(String str) {
+    	this.name = str;
+    	this.isDirty = true;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public String getName()
+    {
+        return this.name;
+    }
+    
     @Override
     public void updateEntity()
     {
-        if (isDirty)
+    	super.updateEntity();
+    	if (isDirty)
         {
             isDirty = false;
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
@@ -52,10 +69,9 @@ public class TileEntityTombStone extends TileEntity
     @Override
     public Packet getDescriptionPacket() 
     {
-        Packet132TileEntityData packet = (Packet132TileEntityData) super.getDescriptionPacket();
-        NBTTagCompound dataTag = packet != null ? packet.data : new NBTTagCompound();
-        writeToNBT(dataTag);
-        return new Packet132TileEntityData(xCoord, yCoord, zCoord, 1, dataTag);
+    	NBTTagCompound nbttagcompound = new NBTTagCompound();
+        this.writeToNBT(nbttagcompound);
+        return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 2, nbttagcompound);
     }
 
     @Override
@@ -64,6 +80,7 @@ public class TileEntityTombStone extends TileEntity
         super.onDataPacket(net, pkt);
         NBTTagCompound tag = pkt != null ? pkt.data : new NBTTagCompound();
         readFromNBT(tag);
+        this.isDirty = true;
     }
     
 	

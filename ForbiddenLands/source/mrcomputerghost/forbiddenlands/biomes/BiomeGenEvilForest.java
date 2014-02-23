@@ -54,7 +54,7 @@ public class BiomeGenEvilForest extends BiomeGenBase
         this.spawnableMonsterList.add(new SpawnListEntry(EntityEnderman.class, 5, 4, 4));
         this.spawnableMonsterList.add(new SpawnListEntry(EntityChicken.class, 5, 5, 5));
         this.spawnableMonsterList.add(new SpawnListEntry(EntitySkeleton.class, 1, 0, 1));
-        //this.spawnableMonsterList.add(new SpawnListEntry(EntityWither.class, 1, 0, 1));
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityWither.class, (int) 0.5, 0, 1));
         this.theWorldGenerator = new WorldGenMinable(Block.silverfish.blockID, 25);
         this.theWorldGenerator = new WorldGenMinable(Block.pumpkin.blockID, 15);
         this.theWorldGenerator = new WorldGenMinable(Block.oreGold.blockID, 10);

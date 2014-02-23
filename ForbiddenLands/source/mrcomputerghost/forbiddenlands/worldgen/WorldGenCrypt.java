@@ -61,7 +61,6 @@ public class WorldGenCrypt extends WorldGenerator
 		{
 			return false;
 		}
-
 		world.setBlock(i + 0, j + 0, k + 0, Block.mycelium.blockID);
 		world.setBlock(i + 0, j + 0, k + 1, Block.mycelium.blockID);
 		world.setBlock(i + 0, j + 0, k + 2, Block.stairsStoneBrick.blockID);

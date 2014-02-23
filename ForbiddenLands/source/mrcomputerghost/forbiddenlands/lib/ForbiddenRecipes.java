@@ -46,5 +46,7 @@ public class ForbiddenRecipes {
 		GameRegistry.addRecipe(new ItemStack(Item.hoeWood, 1),new Object[]{"0LL", "0S0", "0S0", 'L', ForbiddenBlocks.EnchPlanks, 'S', Item.stick});
 		GameRegistry.addRecipe(new ItemStack(Block.chest), new Object[]{"WWW", "W0W", "WWW", 'W', ForbiddenBlocks.EnchPlanks});
         GameRegistry.addRecipe(new ItemStack(Item.saddle), new Object[]{"ABA", "AAA", "S00", 'A', Item.leather, 'B', Block.cloth, 'S', Item.silk});   
+        //GameRegistry.addRecipe(new ItemStack(Item.saddle), new Object[]{"ABA", "AAA", "S00", 'A', Item.leather, 'B', Block.cloth, 'S', Item.silk});   
+        GameRegistry.addShapelessRecipe(new ItemStack(ForbiddenItems.PureBarkChunk, 1), new Object[]{new ItemStack(ForbiddenItems.ParadoxShard)});
     }
 }

@@ -26,6 +26,7 @@ public class BiomeGenWasted extends BiomeGenBase
         this.theBiomeDecorator.deadBushPerChunk = 2;
         this.theBiomeDecorator.reedsPerChunk = 50;
         this.theBiomeDecorator.cactiPerChunk = 10;
+        this.waterColorMultiplier = 15745542;
         this.spawnableMonsterList.add(new SpawnListEntry(EntityZombie.class, 15, 15, 15));
         
     }
@@ -48,6 +49,11 @@ public class BiomeGenWasted extends BiomeGenBase
             WorldGenDungeons worldgendungeons = new WorldGenDungeons();
             worldgendungeons.generate(par1World, par2Random, k, par1World.getHeightValue(k, l) + 1, l);
         }
+    }
+    
+    public int getSkyColorByTemp(float par1)
+    {
+        return 1;
     }
 
 }
