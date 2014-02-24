@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileEntityTombStone extends TileEntity
 {
-	public String name;
+	public static String name;
 	
     public boolean isDirty = false; 
 	

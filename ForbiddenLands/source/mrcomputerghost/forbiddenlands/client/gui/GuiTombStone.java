@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mrcomputerghost.forbiddenlands.blocks.BlockTombStone;
 import mrcomputerghost.forbiddenlands.tileentities.TileEntityTombStone;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -19,7 +20,7 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 @SideOnly(Side.CLIENT)
 public class GuiTombStone extends GuiScreen 
 {
-	private GuiTextField tombTextField;
+	private static GuiTextField tombTextField;
 	
 	private final TileEntityTombStone tombStone;
 	
@@ -54,8 +55,11 @@ public class GuiTombStone extends GuiScreen
         Keyboard.enableRepeatEvents(false);   
     }
 	
+	public static String getText() {
+		return tombTextField.getText();
+	}
 	
-	 protected void actionPerformed(GuiButton par1GuiButton)
+	protected void actionPerformed(GuiButton par1GuiButton)
 	    {
 	        if (par1GuiButton.enabled)
 	        {
@@ -82,7 +86,10 @@ public class GuiTombStone extends GuiScreen
 	                {
 	                    exception.printStackTrace();
 	                }
-
+	                this.tombStone.setName(this.tombTextField.getText());
+	                this.tombStone.isDirty = true;
+	                BlockTombStone.setName(Minecraft.getMinecraft().theWorld, this.tombStone.xCoord, this.tombStone.yCoord, this.tombStone.zCoord, this.tombTextField.getText());
+	                BlockTombStone.setName(Minecraft.getMinecraft().theWorld, this.tombStone.xCoord, this.tombStone.yCoord, this.tombStone.zCoord, this.tombTextField.getText());
 	                this.mc.displayGuiScreen((GuiScreen)null);
 	            }
 	        }

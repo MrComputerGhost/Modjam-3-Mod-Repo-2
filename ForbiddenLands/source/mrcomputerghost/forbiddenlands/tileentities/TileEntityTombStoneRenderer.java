@@ -1,8 +1,10 @@
 package mrcomputerghost.forbiddenlands.tileentities;
 
 import java.awt.Color;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 
-import mrcomputerghost.forbiddenlands.blocks.ForbiddenBlocks;
+import mrcomputerghost.forbiddenlands.lib.Reference;
 import mrcomputerghost.forbiddenlands.lib.Textures;
 import mrcomputerghost.forbiddenlands.model.ModelTombSkull;
 import mrcomputerghost.forbiddenlands.model.ModelTombStone;
@@ -15,25 +17,46 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.FakePlayer;
 
 import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class TileEntityTombStoneRenderer extends TileEntitySpecialRenderer {
 	
 	ModelTombStone tombstone = new ModelTombStone();
 	ModelTombSkull tombskull = new ModelTombSkull();
 	
+	private boolean hasFirstChecked = false;
+	
 	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y,	double z, float f) {
-        
+	public void renderTileEntityAt(TileEntity te, double x, double y,	double z, float f) 
+	{
+		if (!hasFirstChecked) {
+			hasFirstChecked = true;
+			ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
+        	DataOutputStream outputStream = new DataOutputStream(bos);
+        	try
+        	{
+            	// Ask for them all again
+            	//outputStream.writeByte(PacketHandler.FL_SEND_ALL);
+        	}
+        	catch (Exception ex)
+        	{
+            	ex.printStackTrace();
+        	}
+
+        	Packet250CustomPayload packet = new Packet250CustomPayload();
+        	packet.channel = Reference.FB_CLIENT_TO_SERVER_PACKET_CHANNEL;
+        	packet.data = bos.toByteArray();
+        	packet.length = bos.size();
+        	PacketDispatcher.sendPacketToServer(packet);
+		}
 		GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
         TileEntityTombStone disp = (TileEntityTombStone)te;
