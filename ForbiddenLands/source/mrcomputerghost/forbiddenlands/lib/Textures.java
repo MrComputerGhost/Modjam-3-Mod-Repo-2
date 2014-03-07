@@ -9,4 +9,5 @@ public class Textures {
 	
 	public static final ResourceLocation TOMBSTONE_TEXTURE = ResourceLocationHelper.getResourceLactaion(CUSTOM_BLOCK_TEXTURE_LOCATION + "TombStone.png");
 	
+	public static final ResourceLocation RECORD_TEXTURE = ResourceLocationHelper.getResourceLactaion(CUSTOM_BLOCK_TEXTURE_LOCATION + "RecordPlayer.png");
 }

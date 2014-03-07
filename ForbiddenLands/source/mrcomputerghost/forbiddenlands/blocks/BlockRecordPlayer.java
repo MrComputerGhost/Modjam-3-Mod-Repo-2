@@ -10,6 +10,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import mrcomputerghost.forbiddenlands.ForbiddenLands;
 import mrcomputerghost.forbiddenlands.client.gui.GuiTombStone;
 import mrcomputerghost.forbiddenlands.items.ForbiddenItems;
+import mrcomputerghost.forbiddenlands.tileentities.TileEntityRecordPlayer;
 import mrcomputerghost.forbiddenlands.tileentities.TileEntityTombStone;
 import mrcomputerghost.forbiddenlands.util.ForbiddenUtil;
 import net.minecraft.block.Block;
@@ -36,22 +37,24 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockTombStone extends BlockContainer {
+public class BlockRecordPlayer extends BlockContainer {
 	
 	
 	
 	Random rand = new Random();
 	
 	
-    protected BlockTombStone(int par1, Material par2Material)
+    protected BlockRecordPlayer(int par1, Material par2Material)
     {
     	super(par1, Material.rock);
+    	this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.748F, 1.0F);
+    	//this.setBlockBounds(0.25F, 0.0F, 0.25F, 0.75F, 0.5F, 0.75F);
     }
 
     @Override
     public TileEntity createNewTileEntity(World world)
     {
-        return new TileEntityTombStone();
+        return new TileEntityRecordPlayer();
     }
 
     @Override
@@ -83,22 +86,33 @@ public class BlockTombStone extends BlockContainer {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9)
     {
         super.onBlockActivated(world, x, y, z, entityPlayer, par6, par7, par8, par9);      
-            TileEntity bill = world.getBlockTileEntity(x, y, z);
-                if (bill instanceof TileEntityTombStone)
-                {
-                	//FMLNetworkHandler.openGui(entityPlayer, ForbiddenLands.instance, 1, world, x, y, z);
-                	String bob = JOptionPane.showInputDialog("");
-                	((TileEntityTombStone) bill).name = bob;
-                }
+            TileEntityRecordPlayer bill = (TileEntityRecordPlayer) world.getBlockTileEntity(x, y, z); 
+            boolean flag = false;
+            if (entityPlayer.inventory.getCurrentItem().getUnlocalizedName().contains("disc") || entityPlayer.inventory.getCurrentItem().getUnlocalizedName().contains("disk") || entityPlayer.inventory.getCurrentItem().getUnlocalizedName().contains("ball")) flag = true;
+            if (!bill.hasObject && flag) {
+            	bill.hasObject = true;
+            	bill.disc = entityPlayer.inventory.getCurrentItem();
+                bill.disc.stackSize = 1;
+                entityPlayer.inventory.getCurrentItem().stackSize--;
+            }
+            else if (bill.hasObject && !flag) {
+            	bill.hasObject = false;
+            	dropItem(world, x, y, z, bill.disc);
+            	bill.disc = new ItemStack(0, 0, 0);
+            }
+            else if (bill.hasObject && flag) {
+            	dropItem(world, x, y, z, bill.disc);
+            	bill.disc = entityPlayer.inventory.getCurrentItem();
+            	bill.disc.stackSize = 1;
+                entityPlayer.inventory.getCurrentItem().stackSize--;
+            }
 			return true; 
     }
     
     @Override
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer player)
     {
-        TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
-        //te.name = "PROTOTYPE21_";
-    	return;
+        return;
     }
 
     public void dropItem(World world, double x, double y, double z, ItemStack stack)
@@ -112,7 +126,7 @@ public class BlockTombStone extends BlockContainer {
 
     public void breakBlock(World world, int i, int j, int k, int par5, int par6)
     {
-        TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
+        TileEntityRecordPlayer te = (TileEntityRecordPlayer) world.getBlockTileEntity(i, j, k);
 
         if (te != null)
         {
@@ -127,14 +141,13 @@ public class BlockTombStone extends BlockContainer {
     {
         int rotation = MathHelper.floor_double(entityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         world.setBlockMetadataWithNotify(i, j, k, rotation, 2);
-        TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
         
     }
 
     @Override
-        @SideOnly(Side.CLIENT)
-        public void registerIcons(IconRegister par1IconRegister) {
-                this.blockIcon = par1IconRegister.registerIcon("forbiddenlands:grave");
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister) {
+    	this.blockIcon = par1IconRegister.registerIcon("minecraft:jukebox");
     }
     public Block setTickRandomly(boolean par1)
     {
@@ -151,7 +164,6 @@ public class BlockTombStone extends BlockContainer {
      * A randomly called display update to be able to add particles or other items for display
      */
     public void randomDisplayTick(World world, int i, int j, int k, Random par5Random) {
-    	TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
     	
     }
         

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import mrcomputerghost.forbiddenlands.ForbiddenLands;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
@@ -15,26 +13,28 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class WorldChunkMangerForbidden extends WorldChunkManager {
-
+public class WorldChunkMangerForbidden extends WorldChunkManager
+{
 	private GenLayer myGenBiomes;
 	private GenLayer myBiomeIndexLayer;
 	private BiomeCache myBiomeCache;
 	private List<BiomeGenBase> myBiomesToSpawnIn;
 
 	protected WorldChunkMangerForbidden()
-	{
-		this.myBiomeCache = new BiomeCache(this);
-		this.myBiomesToSpawnIn = new ArrayList<BiomeGenBase>();
-		this.myBiomesToSpawnIn.add(ForbiddenLands.ForbiddenLandsBiome);
-		this.myBiomesToSpawnIn.add(ForbiddenLands.EnchantedForest);
-		this.myBiomesToSpawnIn.add(ForbiddenLands.EnchantedForestHills);
-		this.myBiomesToSpawnIn.add(ForbiddenLands.ForbiddenHills);
-		this.myBiomesToSpawnIn.add(ForbiddenLands.Graveyard);
-		this.myBiomesToSpawnIn.add(ForbiddenLands.ThornForest);
-		this.myBiomesToSpawnIn.add(ForbiddenLands.Wasted);
-	}
+    {
+        this.myBiomeCache = new BiomeCache(this);
+        this.myBiomesToSpawnIn = new ArrayList<BiomeGenBase>();
+        this.myBiomesToSpawnIn.add(ForbiddenLands.ForbiddenLandsBiome);
+        this.myBiomesToSpawnIn.add(ForbiddenLands.EnchantedForest);
+        this.myBiomesToSpawnIn.add(ForbiddenLands.EnchantedForestHills);
+        this.myBiomesToSpawnIn.add(ForbiddenLands.ForbiddenHills);
+        this.myBiomesToSpawnIn.add(ForbiddenLands.Graveyard);
+        this.myBiomesToSpawnIn.add(ForbiddenLands.ThornForest);
+        this.myBiomesToSpawnIn.add(ForbiddenLands.Wasted);
+    }
 
 	public WorldChunkMangerForbidden(long seed, WorldType worldtype)
 	{
@@ -66,7 +66,7 @@ public class WorldChunkMangerForbidden extends WorldChunkManager {
 		BiomeGenBase biome = this.myBiomeCache.getBiomeGenAt(x, z);
 		if (biome == null)
 		{
-			return ForbiddenLands.ForbiddenLandsBiome;
+			return ForbiddenLands.ForbiddenHills;
 		}
 
 		return biome;
@@ -156,7 +156,7 @@ public class WorldChunkMangerForbidden extends WorldChunkManager {
 				par1ArrayOfBiomeGenBase[i] = BiomeGenBase.biomeList[aint[i]];
 			} else {
 				//Change this to a biome
-				par1ArrayOfBiomeGenBase[i] = ForbiddenLands.ForbiddenLandsBiome;
+				par1ArrayOfBiomeGenBase[i] = ForbiddenLands.ForbiddenHills;
 			}
 		}
 
@@ -196,7 +196,7 @@ public class WorldChunkMangerForbidden extends WorldChunkManager {
 					par1ArrayOfBiomeGenBase[i] = BiomeGenBase.biomeList[aint[i]];
 				} else {
 					//Change this to a biome
-					par1ArrayOfBiomeGenBase[i] = ForbiddenLands.ForbiddenLandsBiome;
+					par1ArrayOfBiomeGenBase[i] = ForbiddenLands.ForbiddenHills;
 				}
 			}
 
@@ -266,6 +266,4 @@ public class WorldChunkMangerForbidden extends WorldChunkManager {
 	{
 		this.myBiomeCache.cleanupCache();
 	}
-	
-	
 }

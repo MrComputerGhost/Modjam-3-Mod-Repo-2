@@ -4,8 +4,12 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.common.network.PacketDispatcher;
 import mrcomputerghost.forbiddenlands.lib.Reference;
 import mrcomputerghost.forbiddenlands.lib.Textures;
+import mrcomputerghost.forbiddenlands.model.ModelRecordPlayer;
 import mrcomputerghost.forbiddenlands.model.ModelTombSkull;
 import mrcomputerghost.forbiddenlands.model.ModelTombStone;
 import net.minecraft.block.Block;
@@ -17,139 +21,63 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
-
-public class TileEntityTombStoneRenderer extends TileEntitySpecialRenderer {
-	
-	ModelTombStone tombstone = new ModelTombStone();
-	ModelTombSkull tombskull = new ModelTombSkull();
+public class RecordPlayerRenderer extends TileEntitySpecialRenderer
+{
+	ModelRecordPlayer rp = new ModelRecordPlayer();
 	
 	private boolean hasFirstChecked = false;
 	
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y,	double z, float f) 
 	{
-		if (!hasFirstChecked) {
-			hasFirstChecked = true;
-			ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
-        	DataOutputStream outputStream = new DataOutputStream(bos);
-        	try
-        	{
-            	// Ask for them all again
-            	//outputStream.writeByte(PacketHandler.FL_SEND_ALL);
-        	}
-        	catch (Exception ex)
-        	{
-            	ex.printStackTrace();
-        	}
-
-        	Packet250CustomPayload packet = new Packet250CustomPayload();
-        	packet.channel = Reference.FB_CLIENT_TO_SERVER_PACKET_CHANNEL;
-        	packet.data = bos.toByteArray();
-        	packet.length = bos.size();
-        	PacketDispatcher.sendPacketToServer(packet);
-		}
 		GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-        TileEntityTombStone disp = (TileEntityTombStone)te;
+        TileEntityRecordPlayer disp = (TileEntityRecordPlayer)te;
         int block = disp.getBlockMetadata();
         
-        Minecraft.getMinecraft().renderEngine.bindTexture(Textures.TOMBSTONE_TEXTURE);
+        Minecraft.getMinecraft().renderEngine.bindTexture(Textures.RECORD_TEXTURE);
         
         
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
-        tombstone.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+        rp.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
         
         if(disp != null)
         {
-            boolean fit = false;
-            if (disp.getName() != "Skeleton" && disp.getName() != "Player" && disp.getName() != "MrComputerGhost" && disp.getName() != "Grumm" && disp.getName() != "Dinnerbone") {
-            	fit = true;
-            }
-        	if (disp.getName() != null) {
-        	int ind = 5;
-        	if (disp.getName() == "Player" || disp.getName() == "Skeleton") {
-        	
-        		GL11.glPushMatrix();
-                float uf = 0.8F;
-                GL11.glScalef(uf, -uf, -uf);
-                String s = "";            
-                TileEntitySkullRenderer.skullRenderer.func_82393_a(-0.5F, -0.79F, -0.5F, 1, 180.0F, 0, s);
-                GL11.glPopMatrix(); 
-        		
-        	} if (disp.getName() == "Grumm" || disp.getName() == "Dinnerbone") {
-        		GL11.glPushMatrix();
-                float uf = 0.8F;
-                float fu = 0.8F;
-                GL11.glScalef(uf, uf, -uf);
-                String s = disp.getName();            
-                TileEntitySkullRenderer.skullRenderer.func_82393_a(-0.5F, 0.28F, -0.5F, 1, 180.0F, 3, s);
-                GL11.glPopMatrix();
-                GL11.glPushMatrix();
-                GL11.glScalef(-fu, -fu, fu);
-                renderLabel(EnumChatFormatting.DARK_GRAY + disp.getName(), 0F, (0.25F)*ind, -0.6, block, disp);
-                GL11.glPopMatrix();
-                ind++;  
-        	} if (disp.getName() == "MrComputerGhost") {
-        	
-        		GL11.glPushMatrix();
-                float uf = 0.8F;
-                float fu = 1.0F;
-                GL11.glScalef(uf, -uf, -uf);
-                String s = "MrComputerGhost";            
-                TileEntitySkullRenderer.skullRenderer.func_82393_a(-0.5F, -0.79F, -0.5F, 1, 180.0F, 3, "MrComputerGhost");
-                GL11.glPopMatrix();
-                GL11.glPushMatrix();
-                GL11.glScalef(fu, fu, fu);
-                renderLabel(EnumChatFormatting.GOLD + s, 0F, (-0.17F)*ind, -0.6, block, disp);
-                GL11.glPopMatrix();
-                ind++;
-                GL11.glPushMatrix();
-                GL11.glScalef(fu, fu, fu);
-                renderLabel(EnumChatFormatting.GOLD + "The Creator", 0F, (-0.17F)*ind, -0.6, block, disp);
-                GL11.glPopMatrix();
-                ind++;
-        	} else if (fit == true) {
-        	
-            GL11.glPushMatrix();
-            float uf = 0.8F;
-            float fu = 1.0F;
-            GL11.glScalef(uf, -uf, -uf);
-            String s = disp.getName()	;            
-            TileEntitySkullRenderer.skullRenderer.func_82393_a(-0.5F, -0.79F, -0.5F, 1, 180.0F, 3, s);
-            GL11.glPopMatrix();            
-
-            GL11.glPushMatrix();
-            GL11.glScalef(fu, fu, fu);
-            renderLabel(EnumChatFormatting.DARK_GRAY + disp.getName(), 0F, (-0.17F)*ind, -0.6, block, disp);
-            GL11.glPopMatrix();
-            ind++;  
-            //if (disp.extra != null) {
-            /**GL11.glPushMatrix();
-            playerExtra(EnumChatFormatting.LIGHT_PURPLE + "Poop", 0F, (-0.171F)*ind, -0.6, block, Minecraft.getMinecraft().thePlayer);
-            GL11.glPopMatrix();
-            ind++;**/
-            //}
-            }
-            GL11.glPushMatrix();
-            GL11.glDisable(GL11.GL_LIGHTING);
             
-            GL11.glRotatef(180F, 1F, 0F, 0F);
-            GL11.glTranslatef(0.0F, -0.6F + disp.blockMetadata/5, 0F);
-            GL11.glRotatef(0, 0F, 1F, 0F);
-            
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glPopMatrix();
+        	if(disp != null && disp.hasObject && disp.disc != null && disp.disc != new ItemStack(0, 0, 0))
+            {
+                int ind = 1;
+                GL11.glPushMatrix();
+                GL11.glDisable(GL11.GL_LIGHTING);
+                GL11.glScalef(1.6F, 3F, 1.06F);
+                
+                EntityItem entityitem = new EntityItem(te.worldObj, 0.0D, 0.0D, 0.0D, disp.disc);
+                entityitem.hoverStart = -1.57F;
+                disp.disc.stackSize = 1;
+                
+                //GL11.glRotatef(180F, 0F, 0.0F, 0F);
+                /**if(RenderManager.instance.options.fancyGraphics)
+                    RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+                else
+                {*/
+                    GL11.glRotatef(180F, 1F, 1F, 0F);
+                    RenderManager.instance.options.fancyGraphics = true;
+                    RenderManager.instance.renderEntityWithPosYaw(entityitem, 0.25D, -0.125D, 0.039D, 0.0F, 0.0F);
+                    RenderManager.instance.options.fancyGraphics = false;
+                //}
+                GL11.glEnable(GL11.GL_LIGHTING);
+                GL11.glPopMatrix();
             }
+            
         }
         GL11.glPopMatrix();
         GL11.glPopMatrix();
@@ -252,5 +180,7 @@ public class TileEntityTombStoneRenderer extends TileEntitySpecialRenderer {
         
     }
 	
-
+	
+	
+	
 }

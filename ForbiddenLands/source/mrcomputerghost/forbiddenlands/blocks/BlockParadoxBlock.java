@@ -32,7 +32,7 @@ public class BlockParadoxBlock extends Block
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
-            this.blockIcon = par1IconRegister.registerIcon("forbiddenlands:paradox_block");
+            this.blockIcon = par1IconRegister.registerIcon("forbiddenlands:parblock");
     }
 	
 	/**

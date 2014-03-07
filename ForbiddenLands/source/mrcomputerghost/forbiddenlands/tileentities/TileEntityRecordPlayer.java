@@ -1,47 +1,29 @@
 package mrcomputerghost.forbiddenlands.tileentities;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet130UpdateSign;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityTombStone extends TileEntity
+public class TileEntityRecordPlayer extends TileEntity
 {
-	public static String name;
+	public ItemStack disc;
 	
-    public boolean isDirty = false; 
+	public boolean isDirty = false; 
+	public boolean hasObject = false;
 	
-    public TileEntityTombStone()
+	public TileEntityRecordPlayer()
     {
-        this.name = "Player";
-        
+        this.disc = new ItemStack(0, 0, 0);
+        this.hasObject = false;
     }
 	
-    
-    public void setName(String str) {
-    	this.name = str;
-    	this.isDirty = true;
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public String getName()
-    {
-        return this.name;
-    }
-    
-    @Override
+	
+	@Override
     public void updateEntity()
     {
     	super.updateEntity();
@@ -51,13 +33,15 @@ public class TileEntityTombStone extends TileEntity
             worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
         }
     }
-    
-    @Override
+	
+	@Override
     public void writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
-
-        nbt.setString("tombName", name);
+        nbt.setBoolean("hasObject", hasObject);
+        NBTTagCompound tag = new NBTTagCompound();
+        this.disc.writeToNBT(tag);
+        nbt.setCompoundTag("object", tag);
         
     }
 	
@@ -65,8 +49,9 @@ public class TileEntityTombStone extends TileEntity
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-
-        this.name = nbt.getString("tombName");
+        this.hasObject = nbt.getBoolean("hasObject");
+        this.disc = new ItemStack(0, 0, 0);
+        this.disc.readFromNBT(nbt.getCompoundTag("object"));
     }
     
     @Override
@@ -85,6 +70,4 @@ public class TileEntityTombStone extends TileEntity
         readFromNBT(tag);
         this.isDirty = true;
     }
-    
-	
 }

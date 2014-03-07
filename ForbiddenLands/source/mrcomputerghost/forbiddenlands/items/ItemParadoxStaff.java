@@ -13,6 +13,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -21,6 +22,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -72,20 +74,112 @@ public class ItemParadoxStaff extends ItemTool {
         Vec3 dst = src.addVector(lookdir.xCoord*RANGE, lookdir.yCoord*RANGE, lookdir.zCoord*RANGE);
         MovingObjectPosition mop = world.rayTraceBlocks_do_do(src, dst, true, true);
         if(mop == null) return item;
-				
-		
+        int i = MathHelper.floor_double(mop.hitVec.xCoord);
+        int j = MathHelper.floor_double(mop.hitVec.yCoord);
+        int k = MathHelper.floor_double(mop.hitVec.zCoord);	
+        int a = (int) player.posX;
+		//if (mop.hitVec.xCoord  mop.hitVec.yCoord, mop.hitVec.zCoord)
+        //player.setPositionAndUpdate(mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
 		
 		if ((player.inventory.hasItem(ForbiddenItems.ParadoxDust.itemID)) || (player.capabilities.isCreativeMode)) {
-		
-        if(!world.isRemote)
-            world.addWeatherEffect(new EntityLightningBolt(world, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord));
-        	//if (!player.isSneaking()) world.createExplosion(player, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord, 15.0F, false);
-        	//if (player.isSneaking()) world.createExplosion(player, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord, 10.0F, true);
-        //item.damageItem(1, player);
-        //world.spawnParticle("portal", par2 + par6Random.nextFloat(), par3 + 1.1F, par4 + par6Random.nextFloat(), mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
-        //int sel = RANDOM.nextInt(8);
-        //if (sel == 1) {
-        	player.inventory.consumeInventoryItem(ForbiddenItems.ParadoxDust.itemID);
+		world.spawnParticle("fireworksSpark", mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord);
+        if(!world.isRemote) world.addWeatherEffect(new EntityLightningBolt(world, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord));
+        //world.createExplosion(player, mop.hitVec.xCoord, mop.hitVec.yCoord, mop.hitVec.zCoord, 5, false);	
+        if (world.getBlockId(i, j - 1, k) == Block.sand.blockID) {
+        		world.setBlock(i, j - 1, k, Block.glass.blockID);
+        }
+        
+        
+        	if (world.getBlockId(i, j, k - 1) == Block.sand.blockID) {
+        		world.setBlock(i, j, k - 1, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i - 1, j, k) == Block.sand.blockID) {
+        		world.setBlock(i - 1, j, k, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i, j + 1, k) == Block.sand.blockID) {
+        		world.setBlock(i, j + 1, k, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i, j, k + 1) == Block.sand.blockID) {
+        		world.setBlock(i, j, k + 1, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i + 1, j, k) == Block.sand.blockID) {
+        		world.setBlock(i + 1, j, k, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i, j - 2, k) == Block.sand.blockID) {
+        		world.setBlock(i, j - 2, k, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i, j, k - 2) == Block.sand.blockID) {
+        		world.setBlock(i, j, k - 2, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i - 2, j, k) == Block.sand.blockID) {
+        		world.setBlock(i - 2, j, k, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i, j + 2, k) == Block.sand.blockID) {
+        		world.setBlock(i, j + 2, k, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i, j, k + 2) == Block.sand.blockID) {
+        		world.setBlock(i, j, k + 2, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i + 2, j, k) == Block.sand.blockID) {
+        		world.setBlock(i + 2, j, k, Block.glass.blockID);
+        	}
+        	if (world.getBlockId(i, j, k) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j, k);
+        	}
+        	if (world.getBlockId(i, j + 1, k) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 1, k);
+        	}
+        	if (world.getBlockId(i, j + 2, k) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 2, k);
+        	}
+        	if (world.getBlockId(i, j + 3, k) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 4, k);
+        	}
+        	if (world.getBlockId(i, j + 5, k) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 5, k);
+        	}
+        	if (world.getBlockId(i, j + 6, k) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 6, k);
+        	}
+        	if (world.getBlockId(i, j, k + 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j, k + 1);
+        	}
+        	if (world.getBlockId(i, j + 1, k + 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k + 1) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 1, k + 1);
+        	}
+        	if (world.getBlockId(i, j + 2, k + 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k + 1) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 2, k + 1);
+        	}
+        	if (world.getBlockId(i, j + 3, k + 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k + 1) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 4, k + 1);
+        	}
+        	if (world.getBlockId(i, j + 5, k + 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k + 1) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 5, k + 1);
+        	}
+        	if (world.getBlockId(i, j + 6, k + 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k + 1) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 6, k + 1);
+        	}
+        	if (world.getBlockId(i, j, k - 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j, k - 1);
+        	}
+        	if (world.getBlockId(i, j + 1, k - 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k - 1) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 1, k - 1);
+        	}
+        	if (world.getBlockId(i, j + 2, k - 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k - 1) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 2, k - 1);
+        	}
+        	if (world.getBlockId(i, j + 3, k - 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k - 1) == Block.waterStill.blockID) {
+        		world.setBlockToAir(i, j + 4, k - 1);
+        	}
+        	if (world.getBlockId(i, j + 6, k - 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k - 1) == Block.waterStill.blockID || world.getBlockId(i + 2, j, k - 1) == Block.ice.blockID || world.getBlockId(i + 2, j, k - 1) == Block.snow.blockID) {
+        		world.setBlockToAir(i, j + 5, k - 1);
+        	}
+        	if (world.getBlockId(i, j + 6, k - 1) == Block.waterMoving.blockID || world.getBlockId(i + 2, j, k - 1) == Block.waterStill.blockID || world.getBlockId(i + 2, j, k - 1) == Block.ice.blockID || world.getBlockId(i + 2, j, k - 1) == Block.snow.blockID) {
+        		world.setBlockToAir(i, j + 6, k - 1);
+        	}
+        	
+        	    	
+        		//player.inventory.consumeInventoryItem(ForbiddenItems.ParadoxDust.itemID);
         }
 		return item;
       }
