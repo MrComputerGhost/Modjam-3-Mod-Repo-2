@@ -1,25 +1,22 @@
 package mrcomputerghost.forbiddenlands.blocks;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import mrcomputerghost.forbiddenlands.ForbiddenLands;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IShearable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockDeathLeaves extends BlockLeavesBase implements IShearable
+public class BlockDeathLeaves extends Block
 {
-	public BlockDeathLeaves(int par1) 
+
+	public BlockDeathLeaves(int par1, String texture) 
     {
-            super(par1, Material.leaves, false);
+            super(par1, Material.wood);
             setCreativeTab(CreativeTabs.tabBlock);
     }
 
@@ -56,24 +53,5 @@ public class BlockDeathLeaves extends BlockLeavesBase implements IShearable
                     par1World.spawnParticle("smoke", par2 + par5Random.nextFloat(), par3 + 1.1F, par4 + par5Random.nextFloat(), 0.0D, 0.0D, 0.0D);
             }
     }
-    
-    @Override
-    public boolean isShearable(ItemStack item, World world, int x, int y, int z)
-    {
-        return true;
-    }
-    
-    @Override
-    public boolean isLeaves(World world, int x, int y, int z)
-    {
-        return true;
-    }
-
-	@Override
-	public ArrayList<ItemStack> onSheared(ItemStack item, World world, int x, int y, int z, int fortune) {
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-        ret.add(new ItemStack(this, 1, world.getBlockMetadata(x, y, z) & 3));
-        return ret;
-	}
 
 }

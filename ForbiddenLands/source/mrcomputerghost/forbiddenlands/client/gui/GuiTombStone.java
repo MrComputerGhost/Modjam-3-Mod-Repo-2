@@ -7,22 +7,19 @@ import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mrcomputerghost.forbiddenlands.blocks.BlockTombStone;
 import mrcomputerghost.forbiddenlands.tileentities.TileEntityTombStone;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
 @SideOnly(Side.CLIENT)
 public class GuiTombStone extends GuiScreen 
 {
-	private static GuiTextField tombTextField;
+	private GuiTextField tombTextField;
 	
 	private final TileEntityTombStone tombStone;
 	
@@ -57,11 +54,8 @@ public class GuiTombStone extends GuiScreen
         Keyboard.enableRepeatEvents(false);   
     }
 	
-	public static String getText() {
-		return tombTextField.getText();
-	}
 	
-	protected void actionPerformed(GuiButton par1GuiButton)
+	 protected void actionPerformed(GuiButton par1GuiButton)
 	    {
 	        if (par1GuiButton.enabled)
 	        {
@@ -75,23 +69,20 @@ public class GuiTombStone extends GuiScreen
 	                ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
 	                DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
 	                
-	                //try
-	                //{
-	                    /**dataoutputstream.writeInt(this.tombStone.xCoord);
+	                try
+	                {
+	                    dataoutputstream.writeInt(this.tombStone.xCoord);
 	                    dataoutputstream.writeInt(this.tombStone.yCoord);
 	                    dataoutputstream.writeInt(this.tombStone.zCoord);
-	                    Packet.writeString(this.tombTextField.getText(), dataoutputstream);**/
-	                	NBTTagCompound tag = new NBTTagCompound(); 
-	                	tag.setString("tombName", this.tombTextField.getText());
-	                	Packet132TileEntityData pack = new Packet132TileEntityData(this.tombStone.xCoord, this.tombStone.yCoord, this.tombStone.zCoord, 42, tag);
-	                	this.mc.getNetHandler().addToSendQueue(pack);
-	                	
+	                    Packet.writeString(this.tombTextField.getText(), dataoutputstream);
+	                    this.mc.getNetHandler().addToSendQueue(new Packet250CustomPayload(s, bytearrayoutputstream.toByteArray()));
 	                    
-	                /**}
+	                }
 	                catch (Exception exception)
 	                {
 	                    exception.printStackTrace();
-	                }**/
+	                }
+
 	                this.mc.displayGuiScreen((GuiScreen)null);
 	            }
 	        }

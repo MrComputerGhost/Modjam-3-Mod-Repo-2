@@ -1,8 +1,5 @@
 package mrcomputerghost.forbiddenlands.tileentities;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileEntityTombStone extends TileEntity
 {
-	public static String name;
+	public String name;
 	
     public boolean isDirty = false; 
 	
