@@ -11,6 +11,7 @@ import mrcomputerghost.forbiddenlands.biomes.BiomeGenWasted;
 import mrcomputerghost.forbiddenlands.blocks.ForbiddenBlocks;
 import mrcomputerghost.forbiddenlands.items.ForbiddenItems;
 import mrcomputerghost.forbiddenlands.lib.ForbiddenRecipes;
+import mrcomputerghost.forbiddenlands.world.dimension.WorldProviderForbidden;
 import mrcomputerghost.forbiddenlands.worldgen.WorldGenGrave;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -18,6 +19,7 @@ import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.DimensionManager;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -30,10 +32,11 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 
 
-@Mod (modid = "ForbiddenLands", name = "Forbidden Lands", version = "4.4")
+@Mod (modid = "ForbiddenLands", name = "Forbidden Lands", version = "5.7")
 @NetworkMod (clientSideRequired = true, serverSideRequired = false)
 public class ForbiddenLands 
 {
+	public static int dimId = 42;	
 	
 	public static final Logger logger = Logger.getLogger("ForbiddenLands");
 			
@@ -132,9 +135,9 @@ public class ForbiddenLands
 	@EventHandler
     public void load(FMLInitializationEvent event)
     {
-		//Register WorldProvider for Dimension
-		/**DimensionManager.registerProviderType(ForbiddenDimID, WorldProviderForbidden.class, true);
-		DimensionManager.registerDimension(ForbiddenDimID, ForbiddenDimID);**/
+		/**Register WorldProvider for Dimension **/
+		DimensionManager.registerProviderType(dimId, WorldProviderForbidden.class, true);
+		DimensionManager.registerDimension(dimId, dimId);
     }
     
 	

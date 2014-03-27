@@ -8,6 +8,7 @@ import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mrcomputerghost.forbiddenlands.ForbiddenLands;
+import mrcomputerghost.forbiddenlands.client.gui.GuiTombStone;
 import mrcomputerghost.forbiddenlands.items.ForbiddenItems;
 import mrcomputerghost.forbiddenlands.tileentities.TileEntityTombStone;
 import mrcomputerghost.forbiddenlands.util.ForbiddenUtil;
@@ -40,7 +41,8 @@ public class BlockTombStone extends BlockContainer {
 	
 	
 	Random rand = new Random();
-
+	
+	
     protected BlockTombStone(int par1, Material par2Material)
     {
     	super(par1, Material.rock);
@@ -75,27 +77,22 @@ public class BlockTombStone extends BlockContainer {
     {
         return -1;
     }
-
+    
+    
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9)
     {
-        super.onBlockActivated(world, x, y, z, entityPlayer, par6, par7, par8, par9);
-        
-            //if (!world.isRemote)
-            //{
-                TileEntity bill = world.getBlockTileEntity(x, y, z);
-
+        super.onBlockActivated(world, x, y, z, entityPlayer, par6, par7, par8, par9);      
+            TileEntity bill = world.getBlockTileEntity(x, y, z);
                 if (bill instanceof TileEntityTombStone)
                 {
-                	FMLNetworkHandler.openGui(entityPlayer, ForbiddenLands.instance, 1, world, x, y, z);
-                	//System.out.println("PigButtox");
+                	//FMLNetworkHandler.openGui(entityPlayer, ForbiddenLands.instance, 1, world, x, y, z);
+                	String bob = JOptionPane.showInputDialog("");
+                	((TileEntityTombStone) bill).name = bob;
                 }
-                
-            //}
 			return true; 
-
     }
-
+    
     @Override
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer player)
     {

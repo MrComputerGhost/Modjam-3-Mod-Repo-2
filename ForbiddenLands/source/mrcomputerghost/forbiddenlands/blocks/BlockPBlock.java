@@ -15,7 +15,7 @@ import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockDirts extends Block {
+public class BlockPBlock extends Block {
 
 	@SideOnly(Side.CLIENT)
     private Icon iconGrassTop;
@@ -24,7 +24,7 @@ public class BlockDirts extends Block {
     @SideOnly(Side.CLIENT)
     private Icon iconGrassSideOverlay;
 
-    protected BlockDirts(int par1)
+    protected BlockPBlock(int par1)
     {
         super(par1, Material.grass);
         this.setTickRandomly(true);

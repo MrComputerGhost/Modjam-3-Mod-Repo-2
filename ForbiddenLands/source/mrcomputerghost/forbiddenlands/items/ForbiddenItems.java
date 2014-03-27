@@ -54,7 +54,7 @@ public class ForbiddenItems {
 	public static int ParadoxStaffDefaultID = 4259;
 	
 	public static final EnumToolMaterial EnumToolParadox = EnumHelper.addToolMaterial("Paradox", 3, 2570, 10.0F, 4.5F, 35);
-	//public static final EnumToolMaterial EnumToolStab = EnumHelper.addToolMaterial("Paradox", 3, 2570, 6.0F, 4.5F, 50);
+	public static final EnumToolMaterial EnumToolStab = EnumHelper.addToolMaterial("Paradox", 3, 2570, 6.0F, 4.5F, 50);
 	public static final EnumArmorMaterial EnumArmorParadox = EnumHelper.addArmorMaterial("Paradox", 33, new int[]{3, 8, 6, 3}, 35);
 	
 	

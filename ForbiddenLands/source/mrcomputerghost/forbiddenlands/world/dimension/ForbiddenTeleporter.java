@@ -252,7 +252,7 @@ public class ForbiddenTeleporter extends Teleporter
 				par1Entity.motionX = par1Entity.motionY = par1Entity.motionZ = 0.0D;
 			}
 
-			par1Entity.setLocationAndAngles(var49, var25 + 5, var27, par1Entity.rotationYaw, par1Entity.rotationPitch);
+			par1Entity.setLocationAndAngles(var49, var25 + 8, var27, par1Entity.rotationYaw, par1Entity.rotationPitch);
 			return true;
 		}
 		else
@@ -294,6 +294,28 @@ public class ForbiddenTeleporter extends Teleporter
 
 		world.setBlock(x, y, z, ForbiddenBlocks.FBPortal.blockID,0,2);
 		world.setBlock(x, y + 1, z, ForbiddenBlocks.FBPortal.blockID,0,2);
+		
+		world.setBlockToAir(x, y + 4, z);
+		world.setBlockToAir(x, y + 5, z);
+		world.setBlockToAir(x, y + 6, z);
+		world.setBlockToAir(x, y + 7, z);
+		world.setBlockToAir(x, y + 8, z);
+		world.setBlockToAir(x, y + 9, z);
+		world.setBlockToAir(x, y + 10, z);
+		world.setBlockToAir(x, y + 11, z);
+		world.setBlockToAir(x, y + 12, z);
+		world.setBlockToAir(x, y + 13, z);
+		world.setBlockToAir(x, y + 14, z);
+		world.setBlockToAir(x, y + 15, z);
+		world.setBlockToAir(x, y + 16, z);
+		world.setBlockToAir(x, y + 17, z);
+		world.setBlockToAir(x, y + 18, z);
+		world.setBlockToAir(x, y + 19, z);
+		world.setBlockToAir(x, y + 20, z);
+		world.setBlockToAir(x, y + 21, z);
+		world.setBlockToAir(x, y + 22, z);
+		world.setBlockToAir(x, y + 23, z);
+		world.setBlockToAir(x, y + 24, z);
 
 		return true;
 	}

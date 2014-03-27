@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Random;
 
 import mrcomputerghost.forbiddenlands.ForbiddenLands;
-import mrcomputerghost.forbiddenlands.world.dimension.*;
 import mrcomputerghost.forbiddenlands.biomes.BiomeGenThorns;
 import mrcomputerghost.forbiddenlands.blocks.ForbiddenBlocks;
 import mrcomputerghost.forbiddenlands.worldgen.WorldGenEnchTree;
@@ -50,109 +49,108 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 public class ChunkProviderForbidden implements IChunkProvider {
+	/** RNG. */
+	private Random rand;
 
-	 /** RNG. */
-    private Random rand;
+	/** A NoiseGeneratorOctaves used in generating terrain */
+	private NoiseGeneratorOctaves noiseGen1;
 
-    /** A NoiseGeneratorOctaves used in generating terrain */
-    private NoiseGeneratorOctaves noiseGen1;
+	/** A NoiseGeneratorOctaves used in generating terrain */
+	private NoiseGeneratorOctaves noiseGen2;
 
-    /** A NoiseGeneratorOctaves used in generating terrain */
-    private NoiseGeneratorOctaves noiseGen2;
+	/** A NoiseGeneratorOctaves used in generating terrain */
+	private NoiseGeneratorOctaves noiseGen3;
 
-    /** A NoiseGeneratorOctaves used in generating terrain */
-    private NoiseGeneratorOctaves noiseGen3;
+	/** A NoiseGeneratorOctaves used in generating terrain */
+	private NoiseGeneratorOctaves noiseGen4;
 
-    /** A NoiseGeneratorOctaves used in generating terrain */
-    private NoiseGeneratorOctaves noiseGen4;
+	/** A NoiseGeneratorOctaves used in generating terrain */
+	public NoiseGeneratorOctaves noiseGen5;
 
-    /** A NoiseGeneratorOctaves used in generating terrain */
-    public NoiseGeneratorOctaves noiseGen5;
+	/** A NoiseGeneratorOctaves used in generating terrain */
+	public NoiseGeneratorOctaves noiseGen6;
+	public NoiseGeneratorOctaves mobSpawnerNoise;
 
-    /** A NoiseGeneratorOctaves used in generating terrain */
-    public NoiseGeneratorOctaves noiseGen6;
-    public NoiseGeneratorOctaves mobSpawnerNoise;
+	/** Reference to the World object. */
+	private World worldObj;
 
-    /** Reference to the World object. */
-    private World worldObj;
+	/** are map structures going to be generated (e.g. strongholds) */
+	private final boolean mapFeaturesEnabled;
 
-    /** are map structures going to be generated (e.g. strongholds) */
-    private final boolean mapFeaturesEnabled;
+	/** Holds the overall noise array used in chunk generation */
+	private double[] noiseArray;
+	private double[] stoneNoise = new double[256];
+	private MapGenBase caveGenerator = new MapGenCaves();
 
-    /** Holds the overall noise array used in chunk generation */
-    private double[] noiseArray;
-    private double[] stoneNoise = new double[256];
-    private MapGenBase caveGenerator = new MapGenCaves();
+	/** Holds Stronghold Generator */
+	private MapGenStronghold strongholdGenerator = new MapGenStronghold();
 
-    /** Holds Stronghold Generator */
-    private MapGenStronghold strongholdGenerator = new MapGenStronghold();
+	/** Holds Village Generator */
+	private MapGenVillage villageGenerator = new MapGenVillage();
 
-    /** Holds Village Generator */
-    private MapGenVillage villageGenerator = new MapGenVillage();
+	/** Holds Mineshaft Generator */
+	private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
+	private MapGenScatteredFeature scatteredFeatureGenerator = new MapGenScatteredFeature();
 
-    /** Holds Mineshaft Generator */
-    private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
-    private MapGenScatteredFeature scatteredFeatureGenerator = new MapGenScatteredFeature();
+	/** Holds ravine generator */
+	private MapGenBase ravineGenerator = new MapGenRavine();
 
-    /** Holds ravine generator */
-    private MapGenBase ravineGenerator = new MapGenRavine();
+	/** The biomes that are used to generate the chunk */
+	private BiomeGenBase[] biomesForGeneration;
 
-    /** The biomes that are used to generate the chunk */
-    private BiomeGenBase[] biomesForGeneration;
+	/** A double array that hold terrain noise from noiseGen3 */
+	double[] noise3;
 
-    /** A double array that hold terrain noise from noiseGen3 */
-    double[] noise3;
+	/** A double array that hold terrain noise */
+	double[] noise1;
 
-    /** A double array that hold terrain noise */
-    double[] noise1;
+	/** A double array that hold terrain noise from noiseGen2 */
+	double[] noise2;
 
-    /** A double array that hold terrain noise from noiseGen2 */
-    double[] noise2;
+	/** A double array that hold terrain noise from noiseGen5 */
+	double[] noise5;
 
-    /** A double array that hold terrain noise from noiseGen5 */
-    double[] noise5;
+	/** A double array that holds terrain noise from noiseGen6 */
+	double[] noise6;
 
-    /** A double array that holds terrain noise from noiseGen6 */
-    double[] noise6;
+	/**
+	 * Used to store the 5x5 parabolic field that is used during terrain
+	 * generation.
+	 */
+	float[] parabolicField;
+	int[][] field_73219_j = new int[32][32];
 
-    /**
-     * Used to store the 5x5 parabolic field that is used during terrain generation.
-     */
-    float[] parabolicField;
-    int[][] field_73219_j = new int[32][32];
+	{
+		caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
+		strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(strongholdGenerator, STRONGHOLD);
+		villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(villageGenerator, VILLAGE);
+		mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(mineshaftGenerator, MINESHAFT);
+		scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, SCATTERED_FEATURE);
+		ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
+	}
 
-    {
-        caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
-        strongholdGenerator = (MapGenStronghold) TerrainGen.getModdedMapGen(strongholdGenerator, STRONGHOLD);
-        villageGenerator = (MapGenVillage) TerrainGen.getModdedMapGen(villageGenerator, VILLAGE);
-        mineshaftGenerator = (MapGenMineshaft) TerrainGen.getModdedMapGen(mineshaftGenerator, MINESHAFT);
-        scatteredFeatureGenerator = (MapGenScatteredFeature) TerrainGen.getModdedMapGen(scatteredFeatureGenerator, SCATTERED_FEATURE);
-        ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
-    }
+	public ChunkProviderForbidden(World world, long seed, boolean mapFeaturesEnabled) {
+		this.worldObj = world;
+		this.mapFeaturesEnabled = mapFeaturesEnabled;
+		this.rand = new Random(seed);
+		this.noiseGen1 = new NoiseGeneratorOctaves(this.rand, 16);
+		this.noiseGen2 = new NoiseGeneratorOctaves(this.rand, 16);
+		this.noiseGen3 = new NoiseGeneratorOctaves(this.rand, 8);
+		this.noiseGen4 = new NoiseGeneratorOctaves(this.rand, 4);
+		this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 10);
+		this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 16);
+		this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
 
-    public ChunkProviderForbidden(World par1World, long par2, boolean par4)
-    {
-        this.worldObj = par1World;
-        this.mapFeaturesEnabled = par4;
-        this.rand = new Random(par2);
-        this.noiseGen1 = new NoiseGeneratorOctaves(this.rand, 16);
-        this.noiseGen2 = new NoiseGeneratorOctaves(this.rand, 16);
-        this.noiseGen3 = new NoiseGeneratorOctaves(this.rand, 8);
-        this.noiseGen4 = new NoiseGeneratorOctaves(this.rand, 4);
-        this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 10);
-        this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 16);
-        this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
-
-        NoiseGeneratorOctaves[] noiseGens = {noiseGen1, noiseGen2, noiseGen3, noiseGen4, noiseGen5, noiseGen6, mobSpawnerNoise};
-        noiseGens = TerrainGen.getModdedNoiseGenerators(par1World, this.rand, noiseGens);
-        this.noiseGen1 = noiseGens[0];
-        this.noiseGen2 = noiseGens[1];
-        this.noiseGen3 = noiseGens[2];
-        this.noiseGen4 = noiseGens[3];
-        this.noiseGen5 = noiseGens[4];
-        this.noiseGen6 = noiseGens[5];
-        this.mobSpawnerNoise = noiseGens[6];
-    }
+		NoiseGeneratorOctaves[] noiseGens = { noiseGen1, noiseGen2, noiseGen3, noiseGen4, noiseGen5, noiseGen6, mobSpawnerNoise };
+		noiseGens = TerrainGen.getModdedNoiseGenerators(world, this.rand, noiseGens);
+		this.noiseGen1 = noiseGens[0];
+		this.noiseGen2 = noiseGens[1];
+		this.noiseGen3 = noiseGens[2];
+		this.noiseGen4 = noiseGens[3];
+		this.noiseGen5 = noiseGens[4];
+		this.noiseGen6 = noiseGens[5];
+		this.mobSpawnerNoise = noiseGens[6];
+	}
 
 	/**
 	 * Generates the shape of the terrain for the chunk though its all stone
@@ -546,7 +544,7 @@ public class ChunkProviderForbidden implements IChunkProvider {
                 if ((worldObj.getBlockId(j2, l3, j5) == 0) && (worldObj.getBlockId(j2, l3 - 1, j5) == Block.grass.blockID) && (worldObj.getBiomeGenForCoords(j2, j5) == ForbiddenLands.ThornForest))
                 {
                     if (BiomeGenThorns.useOldThornBushes) {    
-                    	new WorldGenEvilForest2(true).generate(worldObj, rand, j2, l3, j5);
+                        new WorldGenEvilForest2(true).generate(worldObj, rand, j2, l3, j5);
                     } else if (!BiomeGenThorns.useOldThornBushes) {
                         new WorldGenEvilForest3(ForbiddenBlocks.ThornShrub.blockID).generate(worldObj, rand, j2, l3, j5);
                     }
@@ -586,6 +584,7 @@ public class ChunkProviderForbidden implements IChunkProvider {
                         new WorldGenEvilWell().generate(worldObj, rand, j2, l3, j5);
                 }
         }
+				
         
 
 		MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(par1IChunkProvider, worldObj, rand, par2, par3, flag));
@@ -662,5 +661,4 @@ public class ChunkProviderForbidden implements IChunkProvider {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

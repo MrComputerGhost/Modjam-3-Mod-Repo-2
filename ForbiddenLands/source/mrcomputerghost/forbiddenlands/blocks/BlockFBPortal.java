@@ -3,6 +3,7 @@ package mrcomputerghost.forbiddenlands.blocks;
 import java.util.Random;
 
 import mrcomputerghost.forbiddenlands.ForbiddenLands;
+import mrcomputerghost.forbiddenlands.world.dimension.ForbiddenTeleporter;
 //import mrcomputerghost.forbiddenlands.world.dimension.ForbiddenTeleporter;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
@@ -21,7 +22,7 @@ public class BlockFBPortal extends BlockBreakable
 {
 	public BlockFBPortal(int par1)
 	{
-		super(par1, "forbiddenlands:fbportal", Material.portal, false);
+		super(par1, "forbiddenlands:ParadoxPortal", Material.portal, false);
 		this.setTickRandomly(true);
 		this.setHardness(-1.0F);
 		this.setStepSound(soundGlassFootstep);
@@ -32,7 +33,7 @@ public class BlockFBPortal extends BlockBreakable
 	@Override
 	public void registerIcons(IconRegister iconRegister)
 	{
-		blockIcon = iconRegister.registerIcon("forbiddenlands:fbportal");
+		blockIcon = iconRegister.registerIcon("forbiddenlands:ParadoxPortal");
 	}
 
 	/**
@@ -167,15 +168,13 @@ public class BlockFBPortal extends BlockBreakable
 				d5 = (double)(par5Random.nextFloat() * 2.0F * (float)i1);
 			}
 
-			par1World.spawnParticle("portal", d0, d1, d2, d3, d4, d5);
+			par1World.spawnParticle("mobSpellAmbient", d0, d1, d2, d3, d4, d5);
 		}
 
 	}
 
-	//@SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 
-	/**
-	 * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
 	
 	public int idPicked(World par1World, int par2, int par3, int par4)
 	{
@@ -200,6 +199,6 @@ public class BlockFBPortal extends BlockBreakable
 				}
 			}
 		}
-	}**/
+	}
 
 }

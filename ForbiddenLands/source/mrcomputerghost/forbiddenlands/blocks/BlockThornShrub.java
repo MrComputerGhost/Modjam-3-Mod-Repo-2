@@ -118,7 +118,11 @@ public class BlockThornShrub extends Block
    
        public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
        {
-           par5Entity.attackEntityFrom(new DamageThornShrub(par5Entity), 0.25F);
+           if (par5Entity instanceof EntityPlayer) {
+        	   EntityPlayer p = (EntityPlayer)par5Entity;
+        	   //if (p.inventory.armorItemInSlot(1).) System.out.println("SUCCESS!");
+        	   par5Entity.attackEntityFrom(new DamageThornShrub(par5Entity), 0.25F);
+           }
            par1World.playRecord("nyancat", par2, par3, par4);
        }
 
