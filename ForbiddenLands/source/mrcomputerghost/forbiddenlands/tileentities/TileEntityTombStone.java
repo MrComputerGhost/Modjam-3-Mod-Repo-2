@@ -19,9 +19,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileEntityTombStone extends TileEntity
 {
-	public static String name;
+	private static String name;
 	
     public boolean isDirty = false; 
+    
+    public int directionFacing = 0;
 	
     public TileEntityTombStone()
     {
@@ -47,8 +49,8 @@ public class TileEntityTombStone extends TileEntity
     	super.updateEntity();
     	if (isDirty)
         {
+            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
             isDirty = false;
-            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);   
         }
     }
     

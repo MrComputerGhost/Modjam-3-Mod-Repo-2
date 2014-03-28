@@ -37,42 +37,42 @@ public class TileEntityTombStoneRenderer extends TileEntitySpecialRenderer {
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y,	double z, float f) 
 	{
-		if (!hasFirstChecked) {
-			hasFirstChecked = true;
-			ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
-        	DataOutputStream outputStream = new DataOutputStream(bos);
-        	try
-        	{
-            	// Ask for them all again
-            	//outputStream.writeByte(PacketHandler.FL_SEND_ALL);
-        	}
-        	catch (Exception ex)
-        	{
-            	ex.printStackTrace();
-        	}
-
-        	Packet250CustomPayload packet = new Packet250CustomPayload();
-        	packet.channel = Reference.FB_CLIENT_TO_SERVER_PACKET_CHANNEL;
-        	packet.data = bos.toByteArray();
-        	packet.length = bos.size();
-        	PacketDispatcher.sendPacketToServer(packet);
-		}
+		
+		
+        TileEntityTombStone disp = (TileEntityTombStone) te;
+		int block = disp.getBlockMetadata();
 		GL11.glPushMatrix();
-        GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-        TileEntityTombStone disp = (TileEntityTombStone)te;
-        int block = disp.getBlockMetadata();
+		int ole = block & 7;
+		if (ole != 1) {
+			switch (ole) {
+			case 2:
+				GL11.glTranslatef((float)x + 0.74F, (float) y + 1.5F, (float) z + 0.74F);
+				break;
+			case 3:
+				GL11.glTranslatef((float)x + 0.6F, (float) y + 1.5F, (float) z + 0.26F);
+				break;
+			case 4:
+				GL11.glTranslatef((float)x + 0.74F, (float) y + 1.5F, (float) z + 0.5F);
+				break;
+			case 5:
+			default:
+				GL11.glTranslatef((float)x + 0.50F, (float) y + 1.5F, (float) z + 0.5F);
+			}
+		} else {
+			GL11.glTranslatef((float)x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
+		}
         
         Minecraft.getMinecraft().renderEngine.bindTexture(Textures.TOMBSTONE_TEXTURE);
         
         
         GL11.glPushMatrix();
-        GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+        GL11.glRotatef(180F, block & 7, 0.0F, 1.0F);
         tombstone.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
         
         if(disp != null)
         {
             boolean fit = false;
-            if (disp.getName() != "Skeleton" && disp.getName() != "Player" && disp.getName() != "MrComputerGhost" && disp.getName() != "Grumm" && disp.getName() != "Dinnerbone") {
+            if (disp.getName() != "Skeleton" && disp.getName() != "Player" && disp.getName() != "MrComputerGhost" && disp.getName() != "Grumm" && disp.getName() != "Dinnerbone" && disp.getName() != null) {
             	fit = true;
             }
         	if (disp.getName() != null) {

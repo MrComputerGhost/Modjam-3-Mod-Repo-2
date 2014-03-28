@@ -37,123 +37,97 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockTombStone extends BlockContainer {
-	
-	
-	
+
 	Random rand = new Random();
-	
-	
-    protected BlockTombStone(int par1, Material par2Material)
-    {
-    	super(par1, Material.rock);
-    }
 
-    @Override
-    public TileEntity createNewTileEntity(World world)
-    {
-        return new TileEntityTombStone();
-    }
+	protected BlockTombStone(int par1, Material par2Material) {
+		super(par1, Material.rock);
+	}
 
-    @Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
-    }
+	@Override
+	public TileEntity createNewTileEntity(World world) {
+		return new TileEntityTombStone();
+	}
 
-    @Override
-    public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i, int j, int k, int l)
-    {
-        return false;
-    }
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
 
-    @Override
-    public boolean isOpaqueCube()
-    {
-        return false;
-    }
+	@Override
+	public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i, int j, int k, int l) {
+		return false;
+	}
 
-    @Override
-    public int getRenderType()
-    {
-        return -1;
-    }
-    
-    
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9)
-    {
-        super.onBlockActivated(world, x, y, z, entityPlayer, par6, par7, par8, par9);      
-            TileEntity bill = world.getBlockTileEntity(x, y, z);
-                if (bill instanceof TileEntityTombStone)
-                {
-                	//FMLNetworkHandler.openGui(entityPlayer, ForbiddenLands.instance, 1, world, x, y, z);
-                	String bob = JOptionPane.showInputDialog("");
-                	((TileEntityTombStone) bill).name = bob;
-                }
-			return true; 
-    }
-    
-    @Override
-    public void onBlockClicked(World world, int i, int j, int k, EntityPlayer player)
-    {
-        TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
-        //te.name = "PROTOTYPE21_";
-    	return;
-    }
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
 
-    public void dropItem(World world, double x, double y, double z, ItemStack stack)
-    {
-        EntityItem entityitem = new EntityItem(world, x + 0.5D, y + 1.5D, z + 0.5D, stack);
-        entityitem.motionX = -1;
-        entityitem.motionZ = 1;
-        entityitem.motionY = -1;
-        world.spawnEntityInWorld(entityitem);
-    }
+	@Override
+	public int getRenderType() {
+		return -1;
+	}
 
-    public void breakBlock(World world, int i, int j, int k, int par5, int par6)
-    {
-        TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9) {
+		super.onBlockActivated(world, x, y, z, entityPlayer, par6, par7, par8, par9);
+		return true;
+	}
 
-        if (te != null)
-        {
-            world.markTileEntityForDespawn(te);
-        }
+	@Override
+	public void onBlockClicked(World world, int i, int j, int k, EntityPlayer player) {
+		TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
+		return;
+	}
 
-        super.breakBlock(world, i, j, k, par5, par6);
-    }
+	public void dropItem(World world, double x, double y, double z, ItemStack stack) {
+		EntityItem entityitem = new EntityItem(world, x + 0.5D, y + 1.5D, z + 0.5D, stack);
+		entityitem.motionX = -1;
+		entityitem.motionZ = 1;
+		entityitem.motionY = -1;
+		world.spawnEntityInWorld(entityitem);
+	}
 
-    @Override
-    public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase entityLiving, ItemStack par6ItemStack)
-    {
-        int rotation = MathHelper.floor_double(entityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-        world.setBlockMetadataWithNotify(i, j, k, rotation, 2);
-        TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
-        
-    }
+	public void breakBlock(World world, int i, int j, int k, int par5, int par6) {
+		TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
 
-    @Override
-        @SideOnly(Side.CLIENT)
-        public void registerIcons(IconRegister par1IconRegister) {
-                this.blockIcon = par1IconRegister.registerIcon("forbiddenlands:grave");
-    }
-    public Block setTickRandomly(boolean par1)
-    {
-        this.needsRandomTick = par1;
-        return this;
-    }
-    
-    public boolean getTickRandomly()
-    {
-        return this.needsRandomTick;
-    }
-    
-    /**
-     * A randomly called display update to be able to add particles or other items for display
-     */
-    public void randomDisplayTick(World world, int i, int j, int k, Random par5Random) {
-    	TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
-    	
-    }
-        
+		if (te != null) {
+			world.markTileEntityForDespawn(te);
+		}
+
+		super.breakBlock(world, i, j, k, par5, par6);
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase entityLiving, ItemStack par6ItemStack) {
+		int l = MathHelper.floor_double((double) (entityLiving.rotationYaw * 4.0F / 360.0F) + 2.5D) & 3;
+		world.setBlockMetadataWithNotify(i, j, k, l, 2);
+
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister par1IconRegister) {
+		this.blockIcon = par1IconRegister.registerIcon("forbiddenlands:grave");
+	}
+
+	public Block setTickRandomly(boolean par1) {
+		this.needsRandomTick = par1;
+		return this;
+	}
+
+	public boolean getTickRandomly() {
+		return this.needsRandomTick;
+	}
+
+	/**
+	 * A randomly called display update to be able to add particles or other
+	 * items for display
+	 */
+	public void randomDisplayTick(World world, int i, int j, int k, Random par5Random) {
+		TileEntityTombStone te = (TileEntityTombStone) world.getBlockTileEntity(i, j, k);
+
+	}
 
 }

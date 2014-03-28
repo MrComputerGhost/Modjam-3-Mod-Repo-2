@@ -1,16 +1,12 @@
 package mrcomputerghost.forbiddenlands.blocks;
 
 import mrcomputerghost.forbiddenlands.ForbiddenLands;
-import mrcomputerghost.forbiddenlands.tileentities.TileEntityRecordPlayer;
 import mrcomputerghost.forbiddenlands.tileentities.TileEntityTombStone;
 import net.minecraft.block.Block;
-import net.minecraft.block.EnumMobType;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;

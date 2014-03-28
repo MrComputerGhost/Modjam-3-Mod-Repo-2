@@ -75,23 +75,23 @@ public class GuiTombStone extends GuiScreen
 	                ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
 	                DataOutputStream dataoutputstream = new DataOutputStream(bytearrayoutputstream);
 	                
-	                //try
-	                //{
-	                    /**dataoutputstream.writeInt(this.tombStone.xCoord);
+	                try
+	                {
+	                    dataoutputstream.writeInt(this.tombStone.xCoord);
 	                    dataoutputstream.writeInt(this.tombStone.yCoord);
 	                    dataoutputstream.writeInt(this.tombStone.zCoord);
-	                    Packet.writeString(this.tombTextField.getText(), dataoutputstream);**/
+	                    Packet.writeString(this.tombTextField.getText(), dataoutputstream);
 	                	NBTTagCompound tag = new NBTTagCompound(); 
 	                	tag.setString("tombName", this.tombTextField.getText());
 	                	Packet132TileEntityData pack = new Packet132TileEntityData(this.tombStone.xCoord, this.tombStone.yCoord, this.tombStone.zCoord, 42, tag);
-	                	this.mc.getNetHandler().addToSendQueue(pack);
+	                	//this.mc.getNetHandler().addToSendQueue(pack);
 	                	
 	                    
-	                /**}
+	                }
 	                catch (Exception exception)
 	                {
 	                    exception.printStackTrace();
-	                }**/
+	                }
 	                this.mc.displayGuiScreen((GuiScreen)null);
 	            }
 	        }

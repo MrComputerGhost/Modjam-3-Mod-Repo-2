@@ -75,7 +75,7 @@ public class ForbiddenLands
         ForbiddenBlocks.ThornShrubDefaultID = config.getBlock("Thorn Shrub", 4046).getInt();
         ForbiddenBlocks.ThornsDefaultID = config.getBlock("Thorns", 4047).getInt();
         ForbiddenBlocks.CorruptedBarkDefaultID = config.getBlock("Corrupted Bark", 4048).getInt();
-        BiomeGenThorns.useOldThornBushes = config.get("Biome Stuff", "Use Old Thorn Bushes", false).getBoolean(false);
+        BiomeGenThorns.useOldThornBushes = config.get("Biome Stuff", "Use Old Thorn Bushes", true).getBoolean(true);
         WorldGenGrave.useCustomGrave = config.get("Biome Stuff", "Use Custom Grave", true).getBoolean(true);
         
         config.save();

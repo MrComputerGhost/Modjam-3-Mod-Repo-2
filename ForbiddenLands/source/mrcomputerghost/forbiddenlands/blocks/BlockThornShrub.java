@@ -3,6 +3,7 @@ package mrcomputerghost.forbiddenlands.blocks;
 import java.util.List;
 import java.util.Random;
 
+import mrcomputerghost.forbiddenlands.DamageThornShrub;
 import mrcomputerghost.forbiddenlands.ForbiddenLands;
 import net.minecraft.block.Block;
 import net.minecraft.block.EnumMobType;
@@ -121,7 +122,7 @@ public class BlockThornShrub extends Block
            if (par5Entity instanceof EntityPlayer) {
         	   EntityPlayer p = (EntityPlayer)par5Entity;
         	   //if (p.inventory.armorItemInSlot(1).) System.out.println("SUCCESS!");
-        	   par5Entity.attackEntityFrom(new DamageThornShrub(par5Entity), 0.25F);
+        	   par5Entity.attackEntityFrom(new DamageThornShrub(par5Entity), 5.0F);
            }
            par1World.playRecord("nyancat", par2, par3, par4);
        }
@@ -131,24 +132,6 @@ public class BlockThornShrub extends Block
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
             this.blockIcon = par1IconRegister.registerIcon("forbiddenlands:thorn_shrub");
-    }
-    
-    public static class DamageThornShrub extends DamageSource
-    {
-            private Entity p;
-
-            public DamageThornShrub(Entity par5Entity)
-            {
-                    super("thornshrub");
-                    this.p = par5Entity;
-            }
-
-            @Override
-            public ChatMessageComponent getDeathMessage(EntityLivingBase par1EntityLivingBase)
-            {
-            	int sel = RANDOM.nextInt(4) + 1;
-                return ChatMessageComponent.createFromText(Minecraft.getMinecraft().thePlayer.username + " " + StatCollector.translateToLocal("death.message" + sel));
-            }
     }
 
 
